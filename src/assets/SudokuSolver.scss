@@ -1,23 +1,37 @@
 @use "../index.scss";
 
 .sudoku-solver {
-   width: 100vw;
-   height: 100vh;
+	width: 100vw;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+button{
+	background-color: red;
+	border: none;
+	padding: 5px 10px;
+	margin: 15px;
+
+	&:active{
+		background-color: black;
+
+	}
+}
+
+
+
 	.sudoku {
-      max-width: 750px;
-      max-height: 750px;
-      flex: 1;
-     
-      height: auto;
+		max-width: 750px;
+		max-height: 750px;
+		flex: 1;
+
+		height: auto;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		grid-template-rows: 1fr 1fr 1fr;
-      
+
 		.section {
-         
 			display: grid;
 			grid-template-columns: 1fr 1fr 1fr;
 			grid-template-rows: 1fr 1fr 1fr;
@@ -28,6 +42,13 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				position: relative;
+				z-index: 5;
+
+				// &.focus{
+				// 	background-color: red;
+					
+				// }
 
 				input[type="number"] {
 					box-sizing: border-box;
@@ -48,6 +69,22 @@
 
 				p {
 					margin: 0;
+				}
+
+				.small-numbers {
+					position: absolute;
+
+					width: 100%;
+					height: 100%;
+
+					display: grid;
+					grid-template-columns: 1fr 1fr 1fr;
+					grid-template-rows: 1fr 1fr 1fr;
+
+					text-align: center;
+
+					z-index: -1;
+					background-color: transparent;
 				}
 			}
 		}
