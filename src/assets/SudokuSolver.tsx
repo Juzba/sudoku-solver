@@ -1,19 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AxiosComp from "./AxiosComp";
 import "./SudokuSolver.scss";
+import useAxiosComp from "./AxiosComp";
 
-const url = "https://localhost:7207/api/sudoku/array";
+const url = "https://localhost:7214/api/sudoku";
 
 const SudokuSolver = () => {
-	const createNullArray: number[][][] = new Array(9).fill(null).map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
+	const createNullArray: number[][][] = new Array(9)
+		.fill(null)
+		.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
 	const [sudokuArray, setSudokuArray] = useState<number[][][]>(createNullArray);
 
+	const { responseData, error, sendData } = useAxiosComp(url, sudokuArray);
 
-	const sendData = () => {
-		if (sudokuArray) {
-			AxiosComp(url, sudokuArray);
-		} else console.error("Sudoku array neexistuje, nemůže odeslat null pole.");
-	};
+	// const sendArray = async () => {
+	// 	await sendData();
+	// 	;
+	// 	console.log("cekam");
+		
+	// 	if (responseData) setSudokuArray(responseData);
+	// };
 
 	const addNumberToArray = (indexX: number, indexY: number, e: React.KeyboardEvent) => {
 		const key = e.key;
@@ -31,10 +37,10 @@ const SudokuSolver = () => {
 		<div className="sudoku-solver">
 			<h1>Extreme sudoku solver.</h1>
 			<div className="buttons">
-				<button onClick={() => sendData()}>Send Data</button>
+				<button onClick={() => sendArray()}>Send Data</button>
 				<button onClick={() => setSudokuArray(createNullArray)}>Clear</button>
-				<button onClick={() => sendData()}>Memory 1</button>
-				<button onClick={() => sendData()}>Memory 2</button>
+				{/* <button onClick={() => sendData()}>Memory 1</button>
+				<button onClick={() => sendData()}>Memory 2</button> */}
 			</div>
 
 			<div className="sudoku">

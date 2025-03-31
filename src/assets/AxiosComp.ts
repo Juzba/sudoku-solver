@@ -1,29 +1,29 @@
 import axios from "axios";
+import { useState } from "react";
 
-const AxiosComp = async (url: string, data: number[][][]) => {
-console.log("AxiosComp Start!");
+const useAxiosComp = (url: string, data: number[][][]) => {
+	const [responseData, setResponse] = useState(null);
+	const [error, setError] = useState(null);
 
-
-	try {
-		const response = await axios.post(url, data);
-		console.log("odpověd?" + response.data);
-
-
-
-
-
-
-		if (response.data.success) {
-			console.log("Data była úspěšně zpracována.");
-		} else {
-			console.log("Něco se pokazilo:", response.data.message);
+	// console.log(responseData);
+	
+	const sendData = async () => {
+		console.log("AxiosComp Start!");
+		try {
+			const res = await axios.post(url, data);
+			console.log("odpověd z web api: " + res.data);
+			setResponse(res.data);
+		} catch (error) {
+			if (error) {
+				console.error("chyba při odesílaní dat axios: " + error);
+				// setError(error);
+			}
 		}
+	};
 
 
 
-	} catch (error) {
-		console.error("chyba při odesílaní dat axios: " + error);
-	}
+	return{responseData, error, sendData}
 };
 
-export default AxiosComp;
+export default useAxiosComp;
