@@ -1,5 +1,7 @@
 @use "../index.scss";
 
+$border-color: #13678A;
+
 .sudoku-solver {
 	width: 100vw;
 	height: 100vh;
@@ -7,85 +9,84 @@
 	flex-direction: column;
 	align-items: center;
 
-button{
-	background-color: red;
-	border: none;
-	padding: 5px 10px;
-	margin: 15px;
+	button {
+		// display: inline;
+		min-width: 85px;
+		background-color: red;
+		border: none;
+		padding: 5px 10px;
+		margin: 15px;
 
-	&:active{
-		background-color: black;
-
+		&:active {
+			background-color: black;
+		}
 	}
-}
-
-
 
 	.sudoku {
-		max-width: 750px;
-		max-height: 750px;
-		flex: 1;
-
-		height: auto;
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 1fr 1fr 1fr;
+		grid-template-columns: repeat(9, 70px);
+		grid-template-rows: repeat(9, 70px);
+		border: solid 6px $border-color;
 
-		.section {
-			display: grid;
-			grid-template-columns: 1fr 1fr 1fr;
-			grid-template-rows: 1fr 1fr 1fr;
-			border: solid 4px rgb(29, 110, 177);
+		
+		.pole {
+			border: solid 1px black;
+			display: flex;
+			position: relative;
+			z-index: 5;
+			
+			&:nth-child(n+19):nth-child(-n+27){
+				border-bottom: solid $border-color 3px;
+			}
 
-			.pole {
-				border: solid 1px black;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				position: relative;
-				z-index: 5;
+			&:nth-child(n+46):nth-child(-n+54){
+				border-bottom: solid $border-color 3px;
+			}
+			
+			&:nth-child(9n +3){
+				border-right: solid $border-color 3px;
+			}
 
-				// &.focus{
-				// 	background-color: red;
-					
-				// }
+			&:nth-child(9n +6){
+				border-right: solid $border-color 3px;
+			}
 
-				input[type="number"] {
-					box-sizing: border-box;
-					font-size: 3rem;
-					width: 100%;
-					height: 100%;
+			input[type="number"] {
+				box-sizing: border-box;
+				font-size: 3rem;
+				width: 100%;
+				height: 100%;
 
-					background-color: transparent;
-					border: none;
-					text-align: center;
-				}
+				background-color: transparent;
+				border: none;
+				text-align:center;
+				// margin: 0;
+			}
 
-				input[type="number"]::-webkit-inner-spin-button,
-				input[type="number"]::-webkit-outer-spin-button {
-					-webkit-appearance: none;
-					margin: 0;
-				}
+			input[type="number"]::-webkit-inner-spin-button,
+			input[type="number"]::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
 
-				p {
-					margin: 0;
-				}
+			// p {
+			// 	margin: 0;
+			// }
 
-				.small-numbers {
-					position: absolute;
+			.small-numbers {
+				position: absolute;
 
-					width: 100%;
-					height: 100%;
+				width: 100%;
+				height: 100%;
 
-					display: grid;
-					grid-template-columns: 1fr 1fr 1fr;
-					grid-template-rows: 1fr 1fr 1fr;
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				grid-template-rows: 1fr 1fr 1fr;
 
-					text-align: center;
+				text-align: center;
 
-					z-index: -1;
-					background-color: transparent;
-				}
+				z-index: -1;
+				background-color: transparent;
 			}
 		}
 	}

@@ -5,9 +5,9 @@ import "./SudokuSolver.scss";
 const url = "https://localhost:7207/api/sudoku/array";
 
 const SudokuSolver = () => {
-	const [sudokuArray, setSudokuArray] = useState<number[][][]>(
-		new Array(9).fill(null).map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)))
-	);
+	const createNullArray: number[][][] = new Array(9).fill(null).map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
+	const [sudokuArray, setSudokuArray] = useState<number[][][]>(createNullArray);
+
 
 	const sendData = () => {
 		if (sudokuArray) {
@@ -30,37 +30,38 @@ const SudokuSolver = () => {
 	return (
 		<div className="sudoku-solver">
 			<h1>Extreme sudoku solver.</h1>
-			<button onClick={() => sendData()}>Send Data</button>
+			<div className="buttons">
+				<button onClick={() => sendData()}>Send Data</button>
+				<button onClick={() => setSudokuArray(createNullArray)}>Clear</button>
+				<button onClick={() => sendData()}>Memory 1</button>
+				<button onClick={() => sendData()}>Memory 2</button>
+			</div>
 
 			<div className="sudoku">
-				{/* /// Big Sections 9x  */}
-				{sudokuArray.map((oneSection, indexX) => {
-					return (
-						<section className="section" key={indexX}>
-							{/* /// Small boxies 9x */}
-							{oneSection.map((OneNumber, indexY) => {
-								return (
-									<div className={"pole"} key={indexY}>
-										<input
-											readOnly
-											value={OneNumber[0] !== 0 ? OneNumber[0] : ""}
-											onKeyDown={(e) => addNumberToArray(indexX, indexY, e)}
-											type="number"
-										/>
+				{sudokuArray.map((oneSection, indexY) =>
+					oneSection.map((OneNumber, indexX) => {
+						const index = indexX + indexY * 10;
+						return (
+							<div className={"pole"} key={index}>
+								{/* {index} */}
+								<input
+									readOnly
+									value={OneNumber[0] !== 0 ? OneNumber[0] : ""}
+									onKeyDown={(e) => addNumberToArray(indexY, indexX, e)}
+									type="number"
+								/>
 
-										{/* // Small numbers 9x */}
-										<div className="small-numbers">
-											{OneNumber.map((OneSmallNum, indexZ) => {
-												if (indexZ === 0 || OneNumber[0] || OneSmallNum === 0) return;
-												return <span key={indexZ}>{OneSmallNum}</span>;
-											})}
-										</div>
-									</div>
-								);
-							})}
-						</section>
-					);
-				})}
+								{/* // Small numbers 9x */}
+								<div className="small-numbers">
+									{OneNumber.map((OneSmallNum, indexZ) => {
+										if (indexZ === 0 || OneNumber[0] || OneSmallNum === 0) return;
+										return <span key={indexZ}>{OneSmallNum}</span>;
+									})}
+								</div>
+							</div>
+						);
+					})
+				)}
 			</div>
 		</div>
 	);
