@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-import AxiosComp from "./AxiosComp";
 import "./SudokuSolver.scss";
-import useAxiosComp from "./AxiosComp";
+import UseAxios from "./UseAxios";
+
+interface SudokuResponse {
+	returnedText: string;
+	success: boolean;
+	returnedArray: number[][][];
+}
 
 const url = "https://localhost:7214/api/sudoku";
 
@@ -10,16 +15,22 @@ const SudokuSolver = () => {
 		.fill(null)
 		.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
 	const [sudokuArray, setSudokuArray] = useState<number[][][]>(createNullArray);
+	const [returnedText, setReturnedText] = useState<string | null>(null);
+	const { error, loading, fetchData } = UseAxios(url);
 
-	const { responseData, error, sendData } = useAxiosComp(url, sudokuArray);
+	const sendArray = async () => {
+		const vysledek = await fetchData(sudokuArray);
 
-	// const sendArray = async () => {
-	// 	await sendData();
-	// 	;
-	// 	console.log("cekam");
-		
-	// 	if (responseData) setSudokuArray(responseData);
-	// };
+		const typedResult = vysledek as SudokuResponse;
+		const { returnedText, success, returnedArray } = typedResult;
+
+		if (success) {
+			if (returnedArray.length === 9 && returnedArray[0].length === 9 && returnedArray[0][0].length === 10)
+				setSudokuArray(returnedArray); // must be number [9][9][10]
+
+			setReturnedText(returnedText);
+		}
+	};
 
 	const addNumberToArray = (indexX: number, indexY: number, e: React.KeyboardEvent) => {
 		const key = e.key;
@@ -69,6 +80,7 @@ const SudokuSolver = () => {
 					})
 				)}
 			</div>
+			<p>{returnedText ? returnedText : "Žádný text!"}</p>
 		</div>
 	);
 };
