@@ -71,8 +71,8 @@ const SudokuSolver = () => {
 								{/* // Small numbers 9x */}
 								<div className="small-numbers">
 									{OneNumber.map((OneSmallNum, indexZ) => {
-										if (indexZ === 0 || OneNumber[0] || OneSmallNum === 0) return;
-										return <span key={indexZ}>{OneSmallNum}</span>;
+										if (indexZ === 0 || OneNumber[0]) return;
+										return <span key={indexZ}>{OneSmallNum !== 0 ? OneSmallNum : ""}</span>;
 									})}
 								</div>
 							</div>
@@ -81,6 +81,7 @@ const SudokuSolver = () => {
 				)}
 			</div>
 			<p>{returnedText ? returnedText : "Žádný text!"}</p>
+			<p>{error ? error : "Spojení bez chyby."}</p>
 		</div>
 	);
 };

@@ -14,7 +14,7 @@ const UseAxios = <T>(url: string) => {
 				const response = await axios.post<T>(url, payload);
 				return response.data;
 			} catch (err) {
-				setError(err instanceof Error ? err.message : "Neznámá chyba");
+				setError(err instanceof Error ? "Chyba při odesílání dat UseAxios: " + err.message : "Neznámá chyba při odesílání dat UseAxios");
 				return null;
 			} finally {
 				setLoading(false);
