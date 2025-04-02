@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { dataArray } from "./Data";
 import "./SudokuSolver.scss";
 import UseAxios from "./UseAxios";
 
@@ -16,13 +17,10 @@ interface CrossState {
 const url = "https://localhost:7214/api/sudoku";
 
 const SudokuSolver = () => {
-	const createNullArray: number[][][] = new Array(9)
-		.fill(null)
-		.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
-	const [sudokuArray, setSudokuArray] = useState<number[][][]>(createNullArray);
+	const [sudokuArray, setSudokuArray] = useState<number[][][]>(dataArray);
 	const [returnedText, setReturnedText] = useState<string | null>(null);
 	const { error, loading, fetchData } = UseAxios(url);
-	const [displayCross, setDisplayCross] = useState<CrossState>({ X: null, Y: null });
+	const [displayCross, setDisplayCross] = useState<CrossState>({ Y: null, X: null });
 
 	const sendArray = async () => {
 		const vysledek = await fetchData(sudokuArray);
@@ -55,7 +53,7 @@ const SudokuSolver = () => {
 			<h1>Extreme sudoku solver.</h1>
 			<div className="buttons">
 				<button onClick={() => sendArray()}>Send Data</button>
-				<button onClick={() => setSudokuArray(createNullArray)}>Clear</button>
+				<button onClick={() => setSudokuArray(dataArray)}>Clear</button>
 				{/* <button onClick={() => sendData()}>Memory 1</button>
 				<button onClick={() => sendData()}>Memory 2</button> */}
 			</div>
@@ -65,13 +63,15 @@ const SudokuSolver = () => {
 					oneSection.map((OneNumber, indexX) => {
 						const index = indexX + indexY * 10;
 						return (
-							<div className={displayCross.X === indexX || displayCross.Y === indexY ? "pole active" : "pole"} key={index}>
+							<div
+								className={displayCross.X === indexX || displayCross.Y === indexY ? "pole active" : "pole"}
+								key={index}>
 								{/* {index} */}
 								<input
 									readOnly
 									value={OneNumber[0] !== 0 ? OneNumber[0] : ""}
 									onKeyDown={(e) => addNumberToArray(indexY, indexX, e)}
-									onClick={() => setDisplayCross({ X: indexX, Y: indexY })}
+									onClick={() => setDisplayCross({ Y: indexY, X: indexX })}
 									type="number"
 								/>
 
@@ -87,7 +87,7 @@ const SudokuSolver = () => {
 					})
 				)}
 			</div>
-			<p>{`X: ${displayCross.X} Y: ${displayCross.Y} `}</p>
+			<p>{`Y: ${displayCross.Y} X: ${displayCross.X}`}</p>
 			<p>{returnedText ? returnedText : "Žádný text!"}</p>
 			<p>{error ? error : "Spojení bez chyby."}</p>
 		</div>
