@@ -12,6 +12,7 @@ interface SudokuResponse {
 interface CrossState {
 	X: null | number;
 	Y: null | number;
+	FocusedNumber: number;
 }
 
 const url = "https://localhost:7214/api/sudoku";
@@ -20,7 +21,7 @@ const SudokuSolver = () => {
 	const [sudokuArray, setSudokuArray] = useState<number[][][]>(dataArray);
 	const [returnedText, setReturnedText] = useState<string | null>(null);
 	const { error, loading, fetchData } = UseAxios(url);
-	const [displayCross, setDisplayCross] = useState<CrossState>({ Y: null, X: null });
+	const [displayCross, setDisplayCross] = useState<CrossState>({ Y: null, X: null, FocusedNumber: 0 });
 
 	const sendArray = async () => {
 		const vysledek = await fetchData(sudokuArray);
@@ -68,10 +69,11 @@ const SudokuSolver = () => {
 								key={index}>
 								{/* {index} */}
 								<input
+									className={displayCross.FocusedNumber === OneNumber[0] ? "input-number" : ""}
 									readOnly
 									value={OneNumber[0] !== 0 ? OneNumber[0] : ""}
 									onKeyDown={(e) => addNumberToArray(indexY, indexX, e)}
-									onClick={() => setDisplayCross({ Y: indexY, X: indexX })}
+									onClick={() => setDisplayCross({ Y: indexY, X: indexX, FocusedNumber: OneNumber[0] })}
 									type="number"
 								/>
 
@@ -87,7 +89,7 @@ const SudokuSolver = () => {
 					})
 				)}
 			</div>
-			<p>{`Y: ${displayCross.Y} X: ${displayCross.X}`}</p>
+			<p>{`Y: ${displayCross.Y}, X: ${displayCross.X}, Number: ${displayCross.FocusedNumber}`}</p>
 			<p>{returnedText ? returnedText : "Žádný text!"}</p>
 			<p>{error ? error : "Spojení bez chyby."}</p>
 		</div>
