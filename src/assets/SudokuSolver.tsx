@@ -16,12 +16,12 @@ interface CrossState {
 }
 
 const urlSolve = "https://localhost:7214/api/sudoku/solve";
-const urlSave = "https://localhost:7214/api/sudoku/savedata";
+// const urlSave = "https://localhost:7214/api/sudoku/savedata";
 
 const SudokuSolver = () => {
 	const [sudokuArray, setSudokuArray] = useState<number[][][]>(dataArray);
 	const [returnedText, setReturnedText] = useState<string | null>(null);
-	const { error, loading, fetchData } = UseAxios(urlSolve);
+	const { error, fetchData } = UseAxios(urlSolve);
 	const [displayCross, setDisplayCross] = useState<CrossState>({ Y: null, X: null, FocusedNumber: 0 });
 
 	const sendArray = async () => {
@@ -83,7 +83,8 @@ const SudokuSolver = () => {
 									{OneNumber.map((OneSmallNum, indexZ) => {
 										// if (indexZ === 0 || OneNumber[0] ) return;
 										if (indexZ === 0  ) return;
-										return <span key={indexZ}>{OneSmallNum > 0 ? OneSmallNum : ""}</span>;
+										return <span 
+										key={indexZ}>{OneSmallNum > 0 ? OneSmallNum : ""}</span>;
 									})}
 								</div>
 							</div>

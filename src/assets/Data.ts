@@ -60,54 +60,88 @@
 // export { dataArray };
 
 
+// const dataArray: number[][][] = new Array(9)
+// 	.fill(null)
+// 	.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
+
+// dataArray[0][0][0] = 3;
+// dataArray[0][4][0] = 9;
+// dataArray[0][6][0] = 5;
+// dataArray[0][8][0] = 7;
+
+
+// dataArray[1][1][0] = 7;
+// dataArray[1][2][0] = 5;
+// dataArray[1][3][0] = 3;
+// dataArray[1][5][0] = 1;
+// dataArray[1][7][0] = 4;
+// dataArray[1][8][0] = 6;
+
+// dataArray[2][3][0] = 7;
+
+// dataArray[3][0][0] = 7;
+// dataArray[3][1][0] = 4;
+// dataArray[3][2][0] = 8;
+// dataArray[3][4][0] = 6;
+// dataArray[3][6][0] = 3;
+// dataArray[3][8][0] = 9;
+
+// dataArray[4][0][0] = 2;
+// dataArray[4][1][0] = 6;
+// dataArray[4][2][0] = 1;
+// dataArray[4][3][0] = 9;
+// dataArray[4][6][0] = 8;
+// dataArray[4][8][0] = 5;
+
+// dataArray[5][3][0] = 8;
+// dataArray[5][4][0] = 7;
+// dataArray[5][6][0] = 4;
+
+// dataArray[6][0][0] = 1;
+// dataArray[6][4][0] = 3;
+// dataArray[6][6][0] = 6;
+// dataArray[6][8][0] = 4;
+
+// dataArray[7][1][0] = 9;
+// dataArray[7][8][0] = 2;
+
+// dataArray[8][0][0] = 4;
+// dataArray[8][1][0] = 5;
+// dataArray[8][2][0] = 2;
+// dataArray[8][3][0] = 6;
+
+// export { dataArray };
+
+
 const dataArray: number[][][] = new Array(9)
 	.fill(null)
 	.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
 
-dataArray[0][0][0] = 3;
-dataArray[0][4][0] = 9;
-dataArray[0][6][0] = 5;
-dataArray[0][8][0] = 7;
+dataArray[0][1][0] = 5;
+dataArray[0][2][0] = 3;
 
 
-dataArray[1][1][0] = 7;
-dataArray[1][2][0] = 5;
-dataArray[1][3][0] = 3;
-dataArray[1][5][0] = 1;
-dataArray[1][7][0] = 4;
-dataArray[1][8][0] = 6;
+dataArray[1][3][0] = 4;
+dataArray[1][6][0] = 8;
 
-dataArray[2][3][0] = 7;
+dataArray[2][1][0] = 7;
 
-dataArray[3][0][0] = 7;
-dataArray[3][1][0] = 4;
-dataArray[3][2][0] = 8;
-dataArray[3][4][0] = 6;
-dataArray[3][6][0] = 3;
-dataArray[3][8][0] = 9;
+dataArray[3][6][0] = 9;
+dataArray[3][7][0] = 5;
 
-dataArray[4][0][0] = 2;
-dataArray[4][1][0] = 6;
-dataArray[4][2][0] = 1;
-dataArray[4][3][0] = 9;
-dataArray[4][6][0] = 8;
-dataArray[4][8][0] = 5;
+dataArray[4][0][0] = 6;
+dataArray[4][3][0] =2;
 
-dataArray[5][3][0] = 8;
-dataArray[5][4][0] = 7;
-dataArray[5][6][0] = 4;
+dataArray[5][7][0] = 7;
 
-dataArray[6][0][0] = 1;
-dataArray[6][4][0] = 3;
-dataArray[6][6][0] = 6;
-dataArray[6][8][0] = 4;
+dataArray[6][0][0] = 8;
+dataArray[6][5][0] = 3;
+dataArray[6][8][0] = 6;
 
-dataArray[7][1][0] = 9;
-dataArray[7][8][0] = 2;
+dataArray[7][4][0] = 9;
+dataArray[7][5][0] = 7;
 
-dataArray[8][0][0] = 4;
-dataArray[8][1][0] = 5;
-dataArray[8][2][0] = 2;
-dataArray[8][3][0] = 6;
+dataArray[8][4][0] = 5;
+dataArray[8][6][0] = 4;
 
 export { dataArray };

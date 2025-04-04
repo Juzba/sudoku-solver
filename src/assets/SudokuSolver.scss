@@ -1,6 +1,6 @@
 @use "../index.scss";
 
-$border-color: #13678A;
+$border-color: #13678a;
 $first-color: red;
 
 .sudoku-solver {
@@ -29,30 +29,29 @@ $first-color: red;
 		grid-template-rows: repeat(9, 70px);
 		border: solid 6px $border-color;
 
-		
 		.pole {
 			border: solid 1px black;
 			display: flex;
 			position: relative;
 			z-index: 5;
 
-			&.active{
+			&.active {
 				background-color: rgba(241, 16, 20, 0.107);
 			}
-			
-			&:nth-child(n+19):nth-child(-n+27){
+
+			&:nth-child(n + 19):nth-child(-n + 27) {
 				border-bottom: solid $border-color 3px;
 			}
 
-			&:nth-child(n+46):nth-child(-n+54){
+			&:nth-child(n + 46):nth-child(-n + 54) {
 				border-bottom: solid $border-color 3px;
 			}
-			
-			&:nth-child(9n +3){
+
+			&:nth-child(9n + 3) {
 				border-right: solid $border-color 3px;
 			}
 
-			&:nth-child(9n +6){
+			&:nth-child(9n + 6) {
 				border-right: solid $border-color 3px;
 			}
 
@@ -64,7 +63,7 @@ $first-color: red;
 
 				background-color: transparent;
 				border: none;
-				text-align:center;
+				text-align: center;
 				// margin: 0;
 			}
 
@@ -74,7 +73,7 @@ $first-color: red;
 				margin: 0;
 			}
 
-			.input-number{
+			.input-number {
 				color: $first-color;
 			}
 
@@ -94,6 +93,10 @@ $first-color: red;
 				background-color: transparent;
 
 				font-size: 0.8rem;
+
+				// .active {
+				// 	color: red;
+				// }
 			}
 		}
 	}
