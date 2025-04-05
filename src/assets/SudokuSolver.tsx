@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { dataArray, dataArray2, clearArray } from "./Data";
+import { useEffect, useState } from "react";
+import { dataArray, dataArray2 } from "./Data";
 import "./SudokuSolver.scss";
 import UseAxios from "./UseAxios";
 
@@ -17,10 +17,9 @@ interface CrossState {
 }
 
 const urlSolve = "https://localhost:7214/api/sudoku/solve";
-// const urlSave = "https://localhost:7214/api/sudoku/savedata";
 
 const SudokuSolver = () => {
-	const [sudokuArray, setSudokuArray] = useState<number[][][]>(dataArray2);
+	const [sudokuArray, setSudokuArray] = useState<number[][][]>(dataArray);
 	const [statusText, setStatusText] = useState<string | null>(null);
 	const [infoMessage, setinfoMessage] = useState<string | null>(null);
 	const { error, fetchData } = UseAxios(urlSolve);
@@ -30,21 +29,20 @@ const SudokuSolver = () => {
 		const vysledek = await fetchData(sudokuArray);
 
 		const typedResult = vysledek as SudokuResponse;
-		const {infoMessage, statusText, success, returnedArray } = typedResult;
+		const { infoMessage, statusText, success, returnedArray } = typedResult;
 
 		if (success) {
 			if (returnedArray.length === 9 && returnedArray[0].length === 9 && returnedArray[0][0].length === 10)
 				setSudokuArray(returnedArray); // must be number [9][9][10]
 
 			setStatusText(statusText);
-			setinfoMessage(infoMessage)
+			setinfoMessage(infoMessage);
 		}
 	};
 
 	const addNumberToArray = (indexX: number, indexY: number, e: React.KeyboardEvent) => {
 		const key = e.key;
 
-		console.log(key);
 		if (key >= "0" && key <= "9") {
 			e.preventDefault(); // Zabránit výchozímu chování
 
@@ -62,9 +60,15 @@ const SudokuSolver = () => {
 	};
 
 	const clear: number[][][] = new Array(9)
-	.fill(null)
-	.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
+		.fill(null)
+		.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
 
+	useEffect(() => {
+		if (infoMessage) {
+			document.addEventListener("mousedown", () => setinfoMessage(""));
+			return () => document.removeEventListener("mousedown", () => setinfoMessage(""));
+		}
+	});
 
 	return (
 		<div className="sudoku-solver">
@@ -110,10 +114,9 @@ const SudokuSolver = () => {
 						);
 					})
 				)}
+				{infoMessage && <p className="info-message">{infoMessage}</p>}
 			</div>
-			{/* <p>{`Y: ${displayCross.Y}, X: ${displayCross.X}, Number: ${displayCross.FocusedNumber}`}</p> */}
 			<p>{statusText ? statusText : "Žádný text!"}</p>
-			<p>{infoMessage ? infoMessage : "Žádný text!"}</p>
 			<p>{error ? error : "Spojení bez chyby."}</p>
 		</div>
 	);

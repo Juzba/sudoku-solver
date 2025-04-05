@@ -61,9 +61,4 @@ dataArray2[8][0][0] = 2;
 dataArray2[8][3][0] = 6;
 
 
-
-const clearArray: number[][][] = new Array(9)
-	.fill(null)
-	.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
-
-export { dataArray, dataArray2, clearArray };
+export { dataArray, dataArray2};
