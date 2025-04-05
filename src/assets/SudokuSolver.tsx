@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { dataArray } from "./Data";
+import { dataArray, dataArray2, clearArray } from "./Data";
 import "./SudokuSolver.scss";
 import UseAxios from "./UseAxios";
 
 interface SudokuResponse {
-	returnedText: string;
+	statusText: string;
+	infoMessage: string;
 	success: boolean;
 	returnedArray: number[][][];
 }
@@ -19,8 +20,9 @@ const urlSolve = "https://localhost:7214/api/sudoku/solve";
 // const urlSave = "https://localhost:7214/api/sudoku/savedata";
 
 const SudokuSolver = () => {
-	const [sudokuArray, setSudokuArray] = useState<number[][][]>(dataArray);
-	const [returnedText, setReturnedText] = useState<string | null>(null);
+	const [sudokuArray, setSudokuArray] = useState<number[][][]>(dataArray2);
+	const [statusText, setStatusText] = useState<string | null>(null);
+	const [infoMessage, setinfoMessage] = useState<string | null>(null);
 	const { error, fetchData } = UseAxios(urlSolve);
 	const [displayCross, setDisplayCross] = useState<CrossState>({ Y: null, X: null, FocusedNumber: 0 });
 
@@ -28,24 +30,33 @@ const SudokuSolver = () => {
 		const vysledek = await fetchData(sudokuArray);
 
 		const typedResult = vysledek as SudokuResponse;
-		const { returnedText, success, returnedArray } = typedResult;
+		const {infoMessage, statusText, success, returnedArray } = typedResult;
 
 		if (success) {
 			if (returnedArray.length === 9 && returnedArray[0].length === 9 && returnedArray[0][0].length === 10)
 				setSudokuArray(returnedArray); // must be number [9][9][10]
 
-			setReturnedText(returnedText);
+			setStatusText(statusText);
+			setinfoMessage(infoMessage)
 		}
 	};
 
 	const addNumberToArray = (indexX: number, indexY: number, e: React.KeyboardEvent) => {
 		const key = e.key;
 
+		console.log(key);
 		if (key >= "0" && key <= "9") {
 			e.preventDefault(); // Zabránit výchozímu chování
 
 			const newSudokuArray = sudokuArray.map((arr) => [...arr]);
 			newSudokuArray[indexX][indexY][0] = parseInt(key, 10);
+			setSudokuArray(newSudokuArray);
+		}
+		if (key == "Backspace" || key == "Delete") {
+			e.preventDefault(); // Zabránit výchozímu chování
+
+			const newSudokuArray = sudokuArray.map((arr) => [...arr]);
+			newSudokuArray[indexX][indexY][0] = 0;
 			setSudokuArray(newSudokuArray);
 		}
 	};
@@ -55,9 +66,9 @@ const SudokuSolver = () => {
 			<h1>Extreme sudoku solver.</h1>
 			<div className="buttons">
 				<button onClick={() => sendArray()}>Send Data</button>
-				<button onClick={() => setSudokuArray(dataArray)}>Clear</button>
-				{/* <button onClick={() => sendData()}>Memory 1</button>
-				<button onClick={() => sendData()}>Memory 2</button> */}
+				<button onClick={() => setSudokuArray(clearArray)}>Clear</button>
+				<button onClick={() => setSudokuArray(dataArray)}>Memory 1</button>
+				<button onClick={() => setSudokuArray(dataArray2)}>Memory 2</button>
 			</div>
 
 			<div className="sudoku">
@@ -82,9 +93,12 @@ const SudokuSolver = () => {
 								<div className="small-numbers">
 									{OneNumber.map((OneSmallNum, indexZ) => {
 										// if (indexZ === 0 || OneNumber[0] ) return;
-										if (indexZ === 0  ) return;
-										return <span 
-										key={indexZ}>{OneSmallNum > 0 ? OneSmallNum : ""}</span>;
+										if (indexZ === 0) return;
+										return (
+											<span className={displayCross.FocusedNumber === OneSmallNum ? "input-number" : ""} key={indexZ}>
+												{OneSmallNum > 0 ? OneSmallNum : ""}
+											</span>
+										);
 									})}
 								</div>
 							</div>
@@ -93,7 +107,8 @@ const SudokuSolver = () => {
 				)}
 			</div>
 			<p>{`Y: ${displayCross.Y}, X: ${displayCross.X}, Number: ${displayCross.FocusedNumber}`}</p>
-			<p>{returnedText ? returnedText : "Žádný text!"}</p>
+			<p>{statusText ? statusText : "Žádný text!"}</p>
+			<p>{infoMessage ? infoMessage : "Žádný text!"}</p>
 			<p>{error ? error : "Spojení bez chyby."}</p>
 		</div>
 	);
