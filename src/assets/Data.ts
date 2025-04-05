@@ -1,3 +1,4 @@
+
 const dataArray: number[][][] = new Array(9)
 	.fill(null)
 	.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));

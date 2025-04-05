@@ -61,12 +61,17 @@ const SudokuSolver = () => {
 		}
 	};
 
+	const clear: number[][][] = new Array(9)
+	.fill(null)
+	.map(() => new Array(9).fill(null).map(() => new Array(10).fill(0)));
+
+
 	return (
 		<div className="sudoku-solver">
 			<h1>Extreme sudoku solver.</h1>
 			<div className="buttons">
 				<button onClick={() => sendArray()}>Send Data</button>
-				<button onClick={() => setSudokuArray(clearArray)}>Clear</button>
+				<button onClick={() => setSudokuArray(clear)}>Clear</button>
 				<button onClick={() => setSudokuArray(dataArray)}>Memory 1</button>
 				<button onClick={() => setSudokuArray(dataArray2)}>Memory 2</button>
 			</div>
@@ -106,7 +111,7 @@ const SudokuSolver = () => {
 					})
 				)}
 			</div>
-			<p>{`Y: ${displayCross.Y}, X: ${displayCross.X}, Number: ${displayCross.FocusedNumber}`}</p>
+			{/* <p>{`Y: ${displayCross.Y}, X: ${displayCross.X}, Number: ${displayCross.FocusedNumber}`}</p> */}
 			<p>{statusText ? statusText : "Žádný text!"}</p>
 			<p>{infoMessage ? infoMessage : "Žádný text!"}</p>
 			<p>{error ? error : "Spojení bez chyby."}</p>
