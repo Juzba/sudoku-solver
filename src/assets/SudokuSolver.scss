@@ -10,16 +10,21 @@ $first-color: red;
 	flex-direction: column;
 	align-items: center;
 
-	button {
-		// display: inline;
-		min-width: 85px;
-		background-color: $first-color;
-		border: none;
-		padding: 5px 10px;
-		margin: 15px;
+	.buttons {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		button {
+			// display: inline;
+			min-width: 85px;
+			background-color: $first-color;
+			border: none;
+			padding: 5px 10px;
+			margin: 15px;
 
-		&:active {
-			background-color: black;
+			&:active {
+				background-color: black;
+			}
 		}
 	}
 
@@ -29,7 +34,6 @@ $first-color: red;
 		grid-template-rows: repeat(9, 70px);
 		border: solid 6px $border-color;
 
-		
 		.pole {
 			border: solid 1px black;
 			display: flex;
@@ -99,18 +103,21 @@ $first-color: red;
 				// 	color: red;
 				// }
 			}
-		
 		}
-		@media (max-width: 700px) {
-			.pole {
-				input[type="number"]{
-					font-size: 2rem;
+		// @media (max-width: 700px) {
+		// 	grid-template-columns: repeat(9, 30px);
+		// 	grid-template-rows: repeat(9, 30px);
 
-				}
-				.small-numbers {
-					font-size: 0.6rem;
-				}
-			}
-		}
+
+
+		// 	.pole {
+		// 		input[type="number"] {
+		// 			font-size: 2rem;
+		// 		}
+		// 		.small-numbers {
+		// 			font-size: 0.6rem;
+		// 		}
+		// 	}
+		// }
 	}
 }
